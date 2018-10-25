@@ -1,5 +1,7 @@
 #!/usr/bin python3.5
 import argparse
+import view
+import logger
 
 
 def getparser():
@@ -8,8 +10,10 @@ def getparser():
 	return parser.parse_args()
 
 
+viewer = view.Viewer()
+logger = logger.Logger()
 try:
 	args = getparser()
-	print(args.filename)
+	viewer.print(args.filename)
 except:
-	print('Some Error')
+	viewer.print('Some Error')
