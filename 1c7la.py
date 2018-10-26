@@ -13,7 +13,8 @@ def getparser():
 viewer = view.Viewer()
 logger = logger.Logger()
 try:
-	args = getparser()
-	viewer.print(args.filename)
+    args = getparser()
+    file_name = args.filename
+    logger.read(file_name)
 except:
 	viewer.print('Some Error')
