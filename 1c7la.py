@@ -16,5 +16,5 @@ try:
     args = getparser()
     file_name = args.filename
     logger.read(file_name)
-except:
-	viewer.print('Some Error')
+except ValueError as err:
+	viewer.print('Some Error',  err)

@@ -6,6 +6,36 @@ class Logger():
     
     
     def convertdatetime(self, tdate,  ttime):
+        """
+        >>> l = Logger()
+        >>> print(l.convertdatetime("20181005", "22:00:00"))
+        2018-10-05 22:00:00
+        >>> print(l.convertdatetime("20181305", "22:00:00"))
+        Traceback (most recent call last):
+        ...
+        ValueError: month must be in 1..12
+        >>> print(l.convertdatetime("20181032", "22:00:00"))
+        Traceback (most recent call last):
+        ...
+        ValueError: day is out of range for month
+        >>> print(l.convertdatetime("20181005", "25:00:00"))
+        Traceback (most recent call last):
+        ...
+        ValueError: hour must be in 0..23
+        >>> print(l.convertdatetime("20181005", "22:63:00"))
+        Traceback (most recent call last):
+        ...
+        ValueError: minute must be in 0..59
+        >>> print(l.convertdatetime("20181005", "22:00:-17"))
+        Traceback (most recent call last):
+        ...
+        ValueError: second must be in 0..59
+        >>> print(l.convertdatetime("20181005", "22:00:77"))
+        Traceback (most recent call last):
+        ...
+        ValueError: second must be in 0..59
+        
+        """
         _tm = ttime.split(":")
         _rawdata = datetime.datetime(int(tdate[:4])
                                     , int(tdate[4:6])
@@ -37,4 +67,3 @@ if __name__ == '__main__':
     logger = Logger()
     #logger.read("/home/pavlo72/XPCommon/1cv7.mlg")
     #print(logger.data)
-    print(logger.convertdatetime("20181005", "22:00:00"))
