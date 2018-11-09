@@ -1,8 +1,11 @@
 import datetime
+import fileinput
+import Hoster
 
 
 class Logger():
     data = ""
+
     
     
     def convertdatetime(self, tdate,  ttime):
@@ -44,19 +47,38 @@ class Logger():
                                     , int(_tm[1])
                                     , int(_tm[2]))
         return _rawdata
-   
+    
+    def decode(self, dline):
+        tmp = dline.split(";")
+        d = {}
+        d['datetime'] = self.convertdatetime(tmp[0], tmp[1])
+        d['user'] = tmp[2]
+        d['mode'] = tmp[3]
+        d['objtype'] = tmp[4]
+        d['action'] = tmp[5]
+        d['wtf2'] = tmp[6]
+        d['wtfr'] = tmp[7]
+        d['objid'] = tmp[8]
+        d['descr'] = tmp[9]
+        print(d) #debug info
+        return d
+
 
     def read(self,  filename):
-        with open(filename,  'rt', encoding='cp1251') as f:
+        #with open(filename,  'rt', encoding='cp1251') as f:
+        with open(filename,  'rt') as f:    
             for line in f:
-                self.data = line #debug info
-                print(self.data) #debug info. print last line.
-        
-        #print('read filename {}'.format(filename))
+                self.ldb.add(self.decode(line.rstrip('\n'))) 
 
         
-    def __init__(self):
-        ...
+    def read1(self,  filename):
+        for line in fileinput.input([filename]):
+            self.data = line #debug info
+            print(self.data) #debug info. print last line.
+
+        
+    def __init__(self, dbase):
+        self.ldb = dbase
     
     
     def __del__(self):
@@ -64,6 +86,10 @@ class Logger():
 
         
 if __name__ == '__main__':
-    logger = Logger()
-    #logger.read("/home/pavlo72/XPCommon/1cv7.mlg")
-    #print(logger.data)
+    db = Hoster.DB()
+    cur = db.con.cursor()
+    cur.execute("select * from rawdata where ((user = 'prg') and (action='OpenSession'))")
+    print(cur.fetchall())
+    #logger = Logger(db)
+    #    logger.read("/home/pavlo72/XPCommon/test.mlg")
+#    print(logger.data)
