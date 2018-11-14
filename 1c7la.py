@@ -25,7 +25,5 @@ try:
         print(args.e_date)#temporary
     elif args.u_date != None:
         print(args.u_date)#temporary
-
-
 except ValueError as err:
 	viewer.print('Some Error',  err)
