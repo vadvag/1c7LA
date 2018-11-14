@@ -82,14 +82,15 @@ class Logger():
     
     
     def __del__(self):
-        ...
+        pass
 
         
 if __name__ == '__main__':
     db = Hoster.DB()
-    cur = db.con.cursor()
-    cur.execute("select * from rawdata where ((user = 'prg') and (action='OpenSession'))")
-    print(cur.fetchall())
+    logger = Logger(db)
+    #cur = db.con.cursor()
+    #cur.execute("select * from rawdata where ((user = 'prg') and (action='OpenSession'))")
+    #print(cur.fetchall())
     #logger = Logger(db)
     #    logger.read("/home/pavlo72/XPCommon/test.mlg")
 #    print(logger.data)
